@@ -1,5 +1,11 @@
+import Navbar from "./components/Navbar";
+
 function App() {
-    return <button className="btn btn-primary">Hello</button>;
+    return (
+        <>
+            <Navbar />
+        </>
+    );
 }
 
 export default App;
