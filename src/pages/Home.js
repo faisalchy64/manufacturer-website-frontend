@@ -1,3 +1,4 @@
+import Footer from "../components/Footer";
 import Hero from "../components/Hero";
 import Review from "../components/Reviews";
 import Showcase from "../components/Showcase";
@@ -10,6 +11,7 @@ function Home() {
             <Showcase />
             <Summary />
             <Review />
+            <Footer />
         </main>
     );
 }
