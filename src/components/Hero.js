@@ -9,7 +9,9 @@ function Hero() {
             <div className="hero-overlay bg-opacity-60 md:rounded-2xl"></div>
             <div className="hero-content text-center text-neutral-content">
                 <div className="max-w-md text-base-100">
-                    <h1 className="my-5 text-5xl font-bold">Hello there</h1>
+                    <h1 className="my-5 text-3xl md:text-5xl font-bold">
+                        Comparts A Manufacturer Website
+                    </h1>
                     <p className="my-5 text-lg">
                         We Make The Best Quality Computer Parts For Your
                         Business...
