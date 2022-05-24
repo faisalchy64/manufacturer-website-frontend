@@ -8,9 +8,9 @@ function Social() {
                 <input
                     type="email"
                     placeholder="email@example.com"
-                    class="input font-bold w-full md:w-[350px]"
+                    className="input font-bold w-full md:w-[350px]"
                 />
-                <button class="btn w-24">Subscribe</button>
+                <button className="btn w-24">Subscribe</button>
             </div>
         </section>
     );
