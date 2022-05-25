@@ -1,7 +1,7 @@
 import { useForm } from "react-hook-form";
 import { Link } from "react-router-dom";
 import GoogleAuth from "../components/GoogleAuth";
-import signup from "../images/signup.png";
+import img from "../images/img.png";
 import auth from "../firebase";
 import {
     useCreateUserWithEmailAndPassword,
@@ -10,7 +10,9 @@ import {
 
 function Signup() {
     const [createUserWithEmailAndPassword, user, loading, emailPasswordError] =
-        useCreateUserWithEmailAndPassword(auth);
+        useCreateUserWithEmailAndPassword(auth, {
+            sendEmailVerification: true,
+        });
 
     const [updateProfile] = useUpdateProfile(auth);
 
@@ -37,7 +39,7 @@ function Signup() {
                 <div className="hidden md:block">
                     <img
                         className="md:h-[340px] lg:h-[450px]"
-                        src={signup}
+                        src={img}
                         alt=""
                     />
                 </div>
@@ -128,7 +130,7 @@ function Signup() {
                                 </p>
                             )}
 
-                            <label className="label text-sm text-primary underline">
+                            <label className="label text-sm text-primary underline py-1">
                                 <Link to="/login">
                                     Already Have An Account?
                                 </Link>
