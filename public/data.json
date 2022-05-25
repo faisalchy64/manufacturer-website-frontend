@@ -25,5 +25,32 @@
         "minimum": 1500,
         "available": 5500,
         "price": 85
+    },
+    {
+        "id": 4,
+        "name": "Motherboard",
+        "img": "https://dlcdnwebimgs.asus.com/gain/8b26091d-9af4-475c-acba-7757bfa9a14c/w800/fwebp",
+        "description": "Intel® Z690 LGA 1700 ATX motherboard built for creators, with PCIe® 5.0, DDR5 support, Thunderbolt™ 4, 10 Gb and 2.5 Gb Ethernet, WiFi 6E, four PCIe 4.0 M.2 slots with heatsinks, plus a USB 3.2 Gen 2x2 front panel connector with Quick Charge 4+ support",
+        "minimum": 1000,
+        "available": 5000,
+        "price": 100
+    },
+    {
+        "id": 5,
+        "name": "Graphics Card",
+        "img": "https://dlcdnwebimgs.asus.com/gain/76de930c-538d-4433-b346-ce7b19a12985/w800/fwebp",
+        "description": "TUF Gaming GeForce RTX™ 3080 buffed-up design with chart-topping thermal performance",
+        "minimum": 500,
+        "available": 2500,
+        "price": 150
+    },
+    {
+        "id": 6,
+        "name": "Cooling Fan",
+        "img": "https://dlcdnwebimgs.asus.com/gain/AB91054A-B998-40B2-AF28-12A63DCA7B99/w717/h525",
+        "description": "ROG Strix LC II 240 all-in-one liquid CPU cooler with Aura Sync, Intel® LGA1700 and AMD AM4/TR4 support and dual ROG 120 mm radiator fans",
+        "minimum": 1500,
+        "available": 5500,
+        "price": 85
     }
 ]

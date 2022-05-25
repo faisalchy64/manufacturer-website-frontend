@@ -1,12 +1,17 @@
-import { NavLink } from "react-router-dom";
+import { signOut } from "firebase/auth";
+import { useAuthState } from "react-firebase-hooks/auth";
+import { Link, NavLink } from "react-router-dom";
+import auth from "../firebase";
 
 function Navbar() {
+    const [user] = useAuthState(auth);
+
     return (
         <div className="navbar bg-base-100">
             <div className="navbar-start">
-                <NavLink to="/" className="btn btn-ghost normal-case text-xl">
+                <Link to="/" className="btn btn-ghost normal-case text-xl">
                     Comparts
-                </NavLink>
+                </Link>
             </div>
 
             <div className="navbar-end hidden md:flex">
@@ -14,12 +19,33 @@ function Navbar() {
                     <li>
                         <NavLink to="/">Home</NavLink>
                     </li>
-                    <li>
-                        <NavLink to="/login">Login</NavLink>
-                    </li>
-                    <li>
-                        <NavLink to="/signup">Signup</NavLink>
-                    </li>
+
+                    {user ? (
+                        <>
+                            <li>
+                                <p
+                                    onClick={() => signOut(auth)}
+                                    className="bg-base-200 font-bold"
+                                >
+                                    Signout
+                                </p>
+                            </li>
+                            <li>
+                                <p className="font-bold text-base-100 bg-rose-700  active:bg-rose-700">
+                                    {user?.displayName}
+                                </p>
+                            </li>
+                        </>
+                    ) : (
+                        <>
+                            <li>
+                                <NavLink to="/login">Login</NavLink>
+                            </li>
+                            <li>
+                                <NavLink to="/signup">Signup</NavLink>
+                            </li>
+                        </>
+                    )}
                 </ul>
             </div>
 
@@ -45,15 +71,35 @@ function Navbar() {
                         tabIndex="0"
                         className="menu menu-compact dropdown-content mt-3 p-2 shadow bg-base-100 rounded-box w-52"
                     >
-                        <li>
+                        <li className="mb-1.5">
                             <NavLink to="/">Home</NavLink>
                         </li>
-                        <li>
-                            <NavLink to="/login">Login</NavLink>
-                        </li>
-                        <li>
-                            <NavLink to="/signup">Signup</NavLink>
-                        </li>
+                        {user ? (
+                            <>
+                                <li className="mb-1.5">
+                                    <p
+                                        onClick={() => signOut(auth)}
+                                        className="bg-base-200 font-bold"
+                                    >
+                                        Signout
+                                    </p>
+                                </li>
+                                <li className="mb-1.5">
+                                    <p className="font-bold text-base-100 bg-rose-700  active:bg-rose-700">
+                                        {user?.displayName}
+                                    </p>
+                                </li>
+                            </>
+                        ) : (
+                            <>
+                                <li className="mb-1.5">
+                                    <NavLink to="/login">Login</NavLink>
+                                </li>
+                                <li className="mb-1.5">
+                                    <NavLink to="/signup">Signup</NavLink>
+                                </li>
+                            </>
+                        )}
                     </ul>
                 </div>
             </div>
