@@ -1,20 +1,36 @@
 import { useForm } from "react-hook-form";
+import { Link } from "react-router-dom";
+import GoogleAuth from "../components/GoogleAuth";
 import signup from "../images/signup.png";
+import auth from "../firebase";
+import {
+    useCreateUserWithEmailAndPassword,
+    useUpdateProfile,
+} from "react-firebase-hooks/auth";
 
 function Signup() {
+    const [createUserWithEmailAndPassword, user, loading, emailPasswordError] =
+        useCreateUserWithEmailAndPassword(auth);
+
+    const [updateProfile] = useUpdateProfile(auth);
+
     const {
         register,
         handleSubmit,
         formState: { errors },
+        reset,
     } = useForm();
 
-    const onSubmit = (data) => {
-        console.log(data);
+    const onSubmit = async (data) => {
+        await createUserWithEmailAndPassword(data.email, data.password);
+        updateProfile({ displayName: data.name });
+
+        reset();
     };
 
     return (
-        <div className="flex flex-col justify-center h-[90vh] bg-base-100">
-            <h1 className="text-3xl sm:text-5xl font-bold text-center my-5">
+        <div className="flex flex-col bg-base-100">
+            <h1 className="text-3xl sm:text-5xl font-bold text-center my-10">
                 Signup
             </h1>
             <div className="hero-content">
@@ -50,7 +66,7 @@ function Signup() {
                             )}
                             {errors?.name?.type === "pattern" && (
                                 <p className="text-xs text-error m-1.5">
-                                    <sup>*</sup> Please give a valid name.
+                                    *Please give a valid name.*
                                 </p>
                             )}
                         </div>
@@ -105,8 +121,20 @@ function Signup() {
                                     one digit, at least one special character)*
                                 </p>
                             )}
+
+                            {emailPasswordError?.code && (
+                                <p className="text-sm text-error text-center my-2.5">
+                                    *{emailPasswordError.code}*
+                                </p>
+                            )}
+
+                            <label className="label text-sm text-primary underline">
+                                <Link to="/login">
+                                    Already Have An Account?
+                                </Link>
+                            </label>
                         </div>
-                        <div className="form-control mt-6">
+                        <div className="form-control">
                             <input
                                 type="submit"
                                 value="Signup"
@@ -116,6 +144,8 @@ function Signup() {
 
                         <div className="divider mb-0">OR</div>
                     </form>
+
+                    <GoogleAuth />
                 </div>
             </div>
         </div>
