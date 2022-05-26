@@ -9,6 +9,7 @@ import { toast, ToastContainer } from "react-toastify";
 function Purchase() {
     const [item, setItem] = useState({});
     const [quantity, setQunatity] = useState(0);
+    const [currentQuantity, setCurrentQunatity] = useState(0);
     const { id } = useParams();
     const [user] = useAuthState(auth);
 
@@ -19,7 +20,38 @@ function Purchase() {
     } = useForm();
 
     const onSubmit = (data) => {
-        console.log(data);
+        data.productName = name;
+        data.img = img;
+        data.description = description;
+        data.quantity = parseInt(quantity);
+        data.price = parseInt(quantity) * price;
+
+        // post a specific order to database
+
+        (async () => {
+            const res = await axios.post("http://localhost:5000/order", data);
+            console.log(res.data);
+        })();
+
+        // update a specific product quantity after a order
+
+        const updateQuantity = available - parseInt(quantity);
+        setCurrentQunatity(updateQuantity);
+        const updateItem = {
+            name,
+            img,
+            description,
+            minimum,
+            available: updateQuantity,
+            price,
+        };
+
+        (async () => {
+            const res = await axios.put(`http://localhost:5000/item/${id}`, {
+                updateItem,
+            });
+            console.log(res.data);
+        })();
     };
 
     // get specific data from database
@@ -29,34 +61,41 @@ function Purchase() {
             const res = await axios.get(`http://localhost:5000/item/${id}`);
             setItem(res.data);
             setQunatity(res.data.minimum);
+            setCurrentQunatity(res.data.available);
         })();
     }, [id]);
 
     const { name, img, description, minimum, available, price } = item;
 
     const handleQuantity = (e) => {
-        if (available >= parseInt(e.target.value) && minimum < e.target.value) {
-            setQunatity(e.target.value);
-        } else if (available < e.target.value) {
+        setQunatity(e.target.value);
+
+        if (available < parseInt(e.target.value)) {
             toast.error("Unavailable Quantity.", {
                 position: "top-center",
-                autoClose: 2500,
+                autoClose: 1500,
                 hideProgressBar: true,
                 closeOnClick: true,
                 pauseOnHover: true,
                 draggable: true,
                 progress: undefined,
             });
-        } else if (minimum > e.target.value) {
+
+            return;
+        }
+
+        if (minimum > parseInt(e.target.value)) {
             toast.error(`Minimum ${minimum} Pieces Needed.`, {
                 position: "top-center",
-                autoClose: 2500,
+                autoClose: 1500,
                 hideProgressBar: true,
                 closeOnClick: true,
                 pauseOnHover: true,
                 draggable: true,
                 progress: undefined,
             });
+
+            return;
         }
     };
 
@@ -76,7 +115,7 @@ function Purchase() {
                         Minimum Order : {minimum} Pieces
                     </h2>
                     <h2 className="font-bold">
-                        Available Quantity : {available} Pieces
+                        Available Quantity : {currentQuantity} Pieces
                     </h2>
                     <h2 className="font-bold">Price : ${price} (Per Piece)</h2>
 
@@ -92,12 +131,12 @@ function Purchase() {
                             onChange={handleQuantity}
                         />
                     </div>
-
-                    <div className="mt-5 card-actions justify-end">
-                        <button className="btn btn-primary">Buy Now</button>
-                    </div>
                 </div>
             </div>
+
+            <h1 className="mt-20 text-center text-3xl md:text-5xl font-bold">
+                User Detail
+            </h1>
 
             <form className="card-body" onSubmit={handleSubmit(onSubmit)}>
                 <div className="form-control">
@@ -190,11 +229,13 @@ function Purchase() {
                 </div>
 
                 <div className="form-control">
-                    <input
+                    <button
                         type="submit"
-                        value="Buy Now"
                         className="btn btn-primary"
-                    />
+                        disabled={available < quantity || minimum > quantity}
+                    >
+                        Purchase
+                    </button>
                 </div>
             </form>
 
