@@ -1,12 +1,12 @@
 import { useNavigate } from "react-router-dom";
 
 function Card({ item }) {
-    const { id, name, img, description, minimum, available, price } = item;
+    const { _id, name, img, description, minimum, available, price } = item;
 
     const navigate = useNavigate();
 
-    const handleBuy = () => {
-        navigate(`/purchase/${id}`);
+    const handlePurchase = () => {
+        navigate(`/purchase/${_id}`);
     };
 
     return (
@@ -24,7 +24,7 @@ function Card({ item }) {
                 </h2>
                 <h2 className="font-bold">Price : ${price} (Per Piece)</h2>
                 <div className="mt-5 card-actions justify-end">
-                    <button onClick={handleBuy} className="btn btn-primary">
+                    <button onClick={handlePurchase} className="btn btn-primary">
                         Buy Now
                     </button>
                 </div>

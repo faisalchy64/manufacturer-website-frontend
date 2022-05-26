@@ -7,7 +7,7 @@ function Showcase() {
 
     useEffect(() => {
         (async () => {
-            const res = await axios.get("data.json");
+            const res = await axios.get("http://localhost:5000/items");
             setItems(res.data);
         })();
     }, []);
@@ -20,7 +20,7 @@ function Showcase() {
 
             <div className="my-5 grid lg:grid-cols-3 md:grid-cols-2 gap-2.5">
                 {items.map((item) => (
-                    <Card key={item.id} item={item} />
+                    <Card key={item._id} item={item} />
                 ))}
             </div>
         </section>
