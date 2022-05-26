@@ -1,13 +1,35 @@
 import { signOut } from "firebase/auth";
 import { useAuthState } from "react-firebase-hooks/auth";
-import { Link, NavLink } from "react-router-dom";
+import { Link, NavLink, useLocation } from "react-router-dom";
 import auth from "../firebase";
 
 function Navbar() {
     const [user] = useAuthState(auth);
+    const { pathname } = useLocation();
 
     return (
         <div className="navbar bg-base-100">
+            {pathname === "/dashboard" && (
+                <label
+                    htmlFor="my-drawer-2"
+                    className="btn btn-square btn-ghost lg:hidden"
+                >
+                    <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        className="inline-block w-5 h-5 stroke-current"
+                    >
+                        <path
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            strokeWidth="2"
+                            d="M4 6h16M4 12h16M4 18h16"
+                        ></path>
+                    </svg>
+                </label>
+            )}
+
             <div className="navbar-start">
                 <Link to="/" className="btn btn-ghost normal-case text-xl">
                     Comparts
@@ -22,6 +44,9 @@ function Navbar() {
 
                     {user ? (
                         <>
+                            <li>
+                                <NavLink to="/dashboard">Dashboard</NavLink>
+                            </li>
                             <li>
                                 <p onClick={() => signOut(auth)}>Signout</p>
                             </li>
@@ -71,6 +96,9 @@ function Navbar() {
                         </li>
                         {user ? (
                             <>
+                                <li>
+                                    <NavLink to="/dashboard">Dashboard</NavLink>
+                                </li>
                                 <li className="mb-1.5">
                                     <p onClick={() => signOut(auth)}>Signout</p>
                                 </li>
