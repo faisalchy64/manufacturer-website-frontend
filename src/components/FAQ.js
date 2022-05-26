@@ -1,4 +1,4 @@
-function FAQ() {
+function Faq() {
     return (
         <section className="w-4/5 mx-auto my-20 py-5">
             <h1 className="text-3xl md:text-5xl font-bold text-center mb-10">
@@ -42,4 +42,4 @@ function FAQ() {
     );
 }
 
-export default FAQ;
+export default Faq;

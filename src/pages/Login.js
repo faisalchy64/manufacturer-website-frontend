@@ -1,22 +1,23 @@
 import img from "../images/img.png";
 import { useForm } from "react-hook-form";
 import GoogleAuth from "../components/GoogleAuth";
-import { Link } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import auth from "../firebase";
 import {
+    useAuthState,
     useSendPasswordResetEmail,
     useSignInWithEmailAndPassword,
 } from "react-firebase-hooks/auth";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { toast, ToastContainer } from "react-toastify";
 
 function Login() {
     const [bool, setBool] = useState(false);
 
-    const [signInWithEmailAndPassword, user, loading, emailPasswordError] =
+    const [signInWithEmailAndPassword, , , emailPasswordError] =
         useSignInWithEmailAndPassword(auth);
 
-    const [sendPasswordResetEmail, sending, error] =
+    const [sendPasswordResetEmail, , passwordResetError] =
         useSendPasswordResetEmail(auth);
 
     const {
@@ -28,6 +29,8 @@ function Login() {
 
     const onSubmit = async (data) => {
         if (bool) {
+            await sendPasswordResetEmail(data.email);
+
             toast.success("Email Sent!", {
                 position: "top-center",
                 autoClose: 1500,
@@ -37,14 +40,24 @@ function Login() {
                 draggable: true,
                 progress: undefined,
             });
-
-            await sendPasswordResetEmail(data.email);
         } else {
             await signInWithEmailAndPassword(data.email, data.password);
         }
 
         reset();
     };
+
+    const navigate = useNavigate();
+    const location = useLocation();
+    const [user] = useAuthState(auth);
+
+    const from = location.state?.from?.pathname || "/";
+
+    useEffect(() => {
+        if (user) {
+            navigate(from, { replace: true });
+        }
+    }, [user, from, navigate]);
 
     return (
         <div className="flex flex-col bg-base-100">
@@ -86,6 +99,12 @@ function Login() {
                                 {errors?.email?.type === "pattern" && (
                                     <p className="text-xs text-error m-1.5">
                                         *Please give a valid email address.*
+                                    </p>
+                                )}
+
+                                {passwordResetError?.code && (
+                                    <p className="text-sm text-error text-center my-2.5">
+                                        *{passwordResetError.code}*
                                     </p>
                                 )}
                             </div>
@@ -208,17 +227,7 @@ function Login() {
                 </div>
             </div>
 
-            <ToastContainer
-                position="top-center"
-                autoClose={1500}
-                hideProgressBar
-                newestOnTop={false}
-                closeOnClick
-                rtl={false}
-                pauseOnFocusLoss
-                draggable
-                pauseOnHover
-            />
+            {!passwordResetError && <ToastContainer />}
         </div>
     );
 }

@@ -4,19 +4,19 @@ import Home from "./pages/Home";
 import Login from "./pages/Login";
 import Signup from "./pages/Signup";
 import "react-toastify/dist/ReactToastify.css";
-import auth from "./firebase";
-import { useAuthState } from "react-firebase-hooks/auth";
 import Loading from "./components/Loading";
 import { useState } from "react";
+import Purchase from "./pages/Purchase";
+import PrivateRoute from "./components/PrivateRoute";
 
 function App() {
-    const [time, setTime] = useState(true);
+    const [load, setLoad] = useState(true);
 
-    setTimeout(() => setTime(false), 1500);
+    setTimeout(() => setLoad(false), 2000);
 
     return (
         <>
-            {time ? (
+            {load ? (
                 <Loading />
             ) : (
                 <>
@@ -24,6 +24,14 @@ function App() {
 
                     <Routes>
                         <Route path="/" element={<Home />} />
+                        <Route
+                            path="/purchase/:id"
+                            element={
+                                <PrivateRoute>
+                                    <Purchase />
+                                </PrivateRoute>
+                            }
+                        />
                         <Route path="/login" element={<Login />} />
                         <Route path="/signup" element={<Signup />} />
                     </Routes>

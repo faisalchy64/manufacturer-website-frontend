@@ -23,12 +23,7 @@ function Navbar() {
                     {user ? (
                         <>
                             <li>
-                                <p
-                                    onClick={() => signOut(auth)}
-                                    className="bg-base-200 font-bold"
-                                >
-                                    Signout
-                                </p>
+                                <p onClick={() => signOut(auth)}>Signout</p>
                             </li>
                             <li>
                                 <p className="font-bold text-base-100 bg-rose-700  active:bg-rose-700">
@@ -77,12 +72,7 @@ function Navbar() {
                         {user ? (
                             <>
                                 <li className="mb-1.5">
-                                    <p
-                                        onClick={() => signOut(auth)}
-                                        className="bg-base-200 font-bold"
-                                    >
-                                        Signout
-                                    </p>
+                                    <p onClick={() => signOut(auth)}>Signout</p>
                                 </li>
                                 <li className="mb-1.5">
                                     <p className="font-bold text-base-100 bg-rose-700  active:bg-rose-700">

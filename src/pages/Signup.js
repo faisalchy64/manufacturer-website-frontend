@@ -1,15 +1,17 @@
 import { useForm } from "react-hook-form";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import GoogleAuth from "../components/GoogleAuth";
 import img from "../images/img.png";
 import auth from "../firebase";
 import {
+    useAuthState,
     useCreateUserWithEmailAndPassword,
     useUpdateProfile,
 } from "react-firebase-hooks/auth";
+import { useEffect } from "react";
 
 function Signup() {
-    const [createUserWithEmailAndPassword, user, loading, emailPasswordError] =
+    const [createUserWithEmailAndPassword, , , emailPasswordError] =
         useCreateUserWithEmailAndPassword(auth, {
             sendEmailVerification: true,
         });
@@ -25,10 +27,19 @@ function Signup() {
 
     const onSubmit = async (data) => {
         await createUserWithEmailAndPassword(data.email, data.password);
-        updateProfile({ displayName: data.name });
+        await updateProfile({ displayName: data.name.toUpperCase() });
 
         reset();
     };
+
+    const navigate = useNavigate();
+    const [user] = useAuthState(auth);
+
+    useEffect(() => {
+        if (user) {
+            navigate("/");
+        }
+    }, [user, navigate]);
 
     return (
         <div className="flex flex-col bg-base-100">
