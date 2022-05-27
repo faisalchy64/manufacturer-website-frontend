@@ -78,7 +78,7 @@ function CheckoutForm({ order }) {
 
             const payment = {
                 _id: _id,
-                transactionId: paymentIntent.id,
+                transactionId: transactionId,
             };
 
             const res = axios.put(

@@ -7,10 +7,10 @@ function Reviews() {
 
     useEffect(() => {
         (async () => {
-            const res = await axios.get("reviews.json");
-            setReviews(res.data);
+            const res = await axios.get("http://localhost:5000/reviews");
+            setReviews(res.data?.reverse());
         })();
-    });
+    }, []);
 
     return (
         <section className="w-4/5 mx-auto my-5 py-5">
@@ -20,7 +20,7 @@ function Reviews() {
 
             <div className="my-5 grid lg:grid-cols-3 md:grid-cols-2 gap-2.5">
                 {reviews.map((review) => (
-                    <Review key={review.id} review={review} />
+                    <Review key={review._id} review={review} />
                 ))}
             </div>
         </section>

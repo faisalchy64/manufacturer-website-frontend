@@ -20,6 +20,36 @@ function Purchase() {
     } = useForm();
 
     const onSubmit = (data) => {
+        console.log(quantity);
+
+        if (available < parseInt(quantity)) {
+            toast.error("Unavailable Quantity.", {
+                position: "top-center",
+                autoClose: 1500,
+                hideProgressBar: true,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+            });
+
+            return;
+        }
+
+        if (minimum > parseInt(quantity)) {
+            toast.error(`Minimum ${minimum} Pieces Needed.`, {
+                position: "top-center",
+                autoClose: 1500,
+                hideProgressBar: true,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+            });
+
+            return;
+        }
+
         data.productName = name;
         data.img = img;
         data.description = description;
@@ -67,37 +97,7 @@ function Purchase() {
 
     const { name, img, description, minimum, available, price } = item;
 
-    const handleQuantity = (e) => {
-        setQunatity(e.target.value);
-
-        if (available < parseInt(e.target.value)) {
-            toast.error("Unavailable Quantity.", {
-                position: "top-center",
-                autoClose: 1500,
-                hideProgressBar: true,
-                closeOnClick: true,
-                pauseOnHover: true,
-                draggable: true,
-                progress: undefined,
-            });
-
-            return;
-        }
-
-        if (minimum > parseInt(e.target.value)) {
-            toast.error(`Minimum ${minimum} Pieces Needed.`, {
-                position: "top-center",
-                autoClose: 1500,
-                hideProgressBar: true,
-                closeOnClick: true,
-                pauseOnHover: true,
-                draggable: true,
-                progress: undefined,
-            });
-
-            return;
-        }
-    };
+    const handleQuantity = (e) => {};
 
     return (
         <section className="w-4/5 mx-auto my-10">
@@ -128,7 +128,7 @@ function Purchase() {
                             placeholder="Enter quantity"
                             className="input input-bordered w-full max-w-xs"
                             value={quantity}
-                            onChange={handleQuantity}
+                            onChange={(e) => setQunatity(e.target.value)}
                         />
                     </div>
                 </div>
@@ -165,16 +165,6 @@ function Purchase() {
                         readOnly
                         {...register("email")}
                     />
-                    {errors?.email?.type === "required" && (
-                        <p className="text-xs text-error m-1.5">
-                            *This field is required.*
-                        </p>
-                    )}
-                    {errors?.email?.type === "pattern" && (
-                        <p className="text-xs text-error m-1.5">
-                            *Please give a valid email address.*
-                        </p>
-                    )}
                 </div>
 
                 <div className="form-control">
