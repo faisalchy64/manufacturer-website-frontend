@@ -4,7 +4,9 @@ function DashboardContent({ children }) {
     return (
         <div className="drawer drawer-mobile">
             <input id="my-drawer-2" type="checkbox" className="drawer-toggle" />
-            <div className="drawer-content m-10">{children}</div>
+            <div className="drawer-content my-10 mx-2.5 md:mx-5">
+                {children}
+            </div>
             <div className="drawer-side">
                 <label htmlFor="my-drawer-2" className="drawer-overlay"></label>
                 <ul className="menu p-4 overflow-y-auto w-60 bg-base-200 text-base-content">

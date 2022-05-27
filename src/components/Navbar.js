@@ -9,7 +9,7 @@ function Navbar() {
 
     return (
         <div className="navbar bg-base-100">
-            {pathname === "/dashboard" && (
+            {pathname.includes("/dashboard") && (
                 <label
                     htmlFor="my-drawer-2"
                     className="btn btn-square btn-ghost lg:hidden"
@@ -36,7 +36,7 @@ function Navbar() {
                 </Link>
             </div>
 
-            <div className="navbar-end hidden md:flex">
+            <div className="navbar-end hidden lg:flex">
                 <ul className="menu menu-horizontal p-0 gap-x-1.5">
                     <li>
                         <NavLink to="/">Home</NavLink>
@@ -45,7 +45,9 @@ function Navbar() {
                     {user ? (
                         <>
                             <li>
-                                <NavLink to="/dashboard">Dashboard</NavLink>
+                                <NavLink to="/dashboard/myorders">
+                                    Dashboard
+                                </NavLink>
                             </li>
                             <li>
                                 <p onClick={() => signOut(auth)}>Signout</p>
@@ -69,7 +71,7 @@ function Navbar() {
                 </ul>
             </div>
 
-            <div className="navbar-end md:hidden">
+            <div className="navbar-end lg:hidden">
                 <div className="dropdown dropdown-end">
                     <label tabIndex="0" className="btn btn-ghost">
                         <svg

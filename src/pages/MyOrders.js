@@ -1,6 +1,7 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { useAuthState } from "react-firebase-hooks/auth";
+import { Link } from "react-router-dom";
 import auth from "../firebase";
 
 function MyOrders() {
@@ -49,18 +50,28 @@ function MyOrders() {
                         {orders.map((order) => (
                             <tr key={order._id}>
                                 <td>{order.productName}</td>
-                                <td>Null</td>
+                                <td>{order?.transactionId}</td>
                                 <td>{order.price}</td>
                                 <td>{order.quantity}</td>
                                 <td>
-                                    <button className="btn btn-primary">
-                                        Pay Now
-                                    </button>
+                                    {order?.paid ? (
+                                        <button className="btn btn-sm btn-success">
+                                            Paid
+                                        </button>
+                                    ) : (
+                                        <Link
+                                            to={`/dashboard/payment/${order._id}`}
+                                            className="btn btn-sm btn-primary"
+                                        >
+                                            Pay Now
+                                        </Link>
+                                    )}
                                 </td>
                                 <td>
                                     <label
                                         htmlFor="my-modal-6"
-                                        className="btn btn-error modal-button"
+                                        className="btn btn-sm btn-error modal-button"
+                                        disabled={order?.paid}
                                         onClick={() => setId(order._id)}
                                     >
                                         Cancel
