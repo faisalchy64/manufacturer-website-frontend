@@ -1,6 +1,5 @@
 import axios from "axios";
 import { useQuery } from "react-query";
-import { Link } from "react-router-dom";
 
 function ManageAllOrders() {
     const { data: orders } = useQuery("orders", () =>
@@ -22,7 +21,6 @@ function ManageAllOrders() {
                             <th>Price($)</th>
                             <th>Quantity</th>
                             <th>Pay</th>
-                            <th>Edit</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -36,25 +34,13 @@ function ManageAllOrders() {
                                 <td>
                                     {order?.paid ? (
                                         <button className="btn btn-sm btn-success">
-                                            Paid
+                                            Pending
                                         </button>
                                     ) : (
-                                        <Link
-                                            to={`/dashboard/payment/${order._id}`}
-                                            className="btn btn-sm btn-primary"
-                                        >
-                                            Pay Now
-                                        </Link>
+                                        <button className="btn btn-sm btn-primary">
+                                            Unpaid
+                                        </button>
                                     )}
-                                </td>
-                                <td>
-                                    <label
-                                        htmlFor="my-modal-6"
-                                        className="btn btn-sm btn-error modal-button"
-                                        disabled={order?.paid}
-                                    >
-                                        Cancel
-                                    </label>
                                 </td>
                             </tr>
                         ))}

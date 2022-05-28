@@ -15,6 +15,7 @@ import ManageAllOrders from "./pages/ManageAllOrders";
 import MakeAdmin from "./pages/MakeAdmin";
 import AdminRoute from "./components/AdminRoute";
 import AddProduct from "./pages/AddProduct";
+import ManageProducts from "./pages/ManageProducts";
 
 function App() {
     return (
@@ -42,6 +43,7 @@ function App() {
                     <Route path="myorders" element={<MyOrders />} />
                     <Route path="addreview" element={<AddReview />} />
                     <Route path="payment/:id" element={<Payment />} />
+                    <Route path="myprofile" element={<MyProfile />} />
 
                     {/* admin routes */}
 
@@ -62,6 +64,14 @@ function App() {
                         }
                     />
                     <Route
+                        path="manageproducts"
+                        element={
+                            <AdminRoute>
+                                <ManageProducts />
+                            </AdminRoute>
+                        }
+                    />
+                    <Route
                         path="makeadmin"
                         element={
                             <AdminRoute>
@@ -72,8 +82,6 @@ function App() {
                 </Route>
                 <Route path="/login" element={<Login />} />
                 <Route path="/signup" element={<Signup />} />
-
-                <Route path="myprofile" element={<MyProfile />} />
             </Routes>
         </div>
     );

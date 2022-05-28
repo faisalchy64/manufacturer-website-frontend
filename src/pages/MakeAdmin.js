@@ -1,5 +1,6 @@
 import axios from "axios";
 import { useQuery } from "react-query";
+import TableRow from "../components/TableRow";
 
 function MakeAdmin() {
     const { data: users, refetch } = useQuery("users", () =>
@@ -13,18 +14,6 @@ function MakeAdmin() {
             })
             .then((res) => res.data)
     );
-
-    const handleAdmin = (email) => {
-        axios
-            .put(`http://localhost:5000/user/admin/${email}`, {
-                headers: {
-                    authorization: `Bearer ${localStorage.getItem(
-                        "accessToken"
-                    )}`,
-                },
-            })
-            .then((res) => refetch());
-    };
 
     return (
         <section>
@@ -42,28 +31,11 @@ function MakeAdmin() {
                     </thead>
                     <tbody>
                         {users?.map((user) => (
-                            <tr key={user._id}>
-                                <td>{user.email}</td>
-                                <td>
-                                    {user.role ? (
-                                        "Admin"
-                                    ) : (
-                                        <button
-                                            onClick={() =>
-                                                handleAdmin(user.email)
-                                            }
-                                            className="btn btn-xs btn-success"
-                                        >
-                                            Make Admin
-                                        </button>
-                                    )}
-                                </td>
-                                <td>
-                                    <button className="btn btn-xs btn-error">
-                                        Remove User
-                                    </button>
-                                </td>
-                            </tr>
+                            <TableRow
+                                key={user._id}
+                                user={user}
+                                refetch={refetch}
+                            />
                         ))}
                     </tbody>
                 </table>
