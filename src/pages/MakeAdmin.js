@@ -29,7 +29,7 @@ function MakeAdmin() {
     return (
         <section>
             <h1 className="mb-5 text-3xl md:text-5xl font-bold text-center">
-                Manage All Orders
+                Make Admin
             </h1>
             <div className="overflow-x-auto">
                 <table className="table table-zebra w-full">

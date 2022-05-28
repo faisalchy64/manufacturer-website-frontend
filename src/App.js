@@ -14,6 +14,7 @@ import Payment from "./components/Payment";
 import ManageAllOrders from "./pages/ManageAllOrders";
 import MakeAdmin from "./pages/MakeAdmin";
 import AdminRoute from "./components/AdminRoute";
+import AddProduct from "./pages/AddProduct";
 
 function App() {
     return (
@@ -49,6 +50,14 @@ function App() {
                         element={
                             <AdminRoute>
                                 <ManageAllOrders />
+                            </AdminRoute>
+                        }
+                    />
+                    <Route
+                        path="addproduct"
+                        element={
+                            <AdminRoute>
+                                <AddProduct />
                             </AdminRoute>
                         }
                     />

@@ -7,8 +7,7 @@ import useAdmin from "../hooks/useAdmin";
 function Navbar() {
     const [user] = useAuthState(auth);
     const { pathname } = useLocation();
-    console.log(user.email);
-    const [admin] = useAdmin(user.email);
+    const [admin] = useAdmin(user?.email);
 
     return (
         <div className="navbar bg-base-100">
@@ -48,15 +47,15 @@ function Navbar() {
                     {user ? (
                         <>
                             <li>
-                                <NavLink
-                                    to={
-                                        admin
-                                            ? "/dashboard/manageallroders"
-                                            : "/dashboard/myorders"
-                                    }
-                                >
-                                    Dashboard
-                                </NavLink>
+                                {admin ? (
+                                    <NavLink to="/dashboard/manageallorders">
+                                        Dashboard
+                                    </NavLink>
+                                ) : (
+                                    <NavLink to="/dashboard/myorders">
+                                        Dashboard
+                                    </NavLink>
+                                )}
                             </li>
                             <li>
                                 <p
@@ -115,15 +114,15 @@ function Navbar() {
                         {user ? (
                             <>
                                 <li>
-                                    <NavLink
-                                        to={
-                                            admin
-                                                ? "/dashboard/manageallroders"
-                                                : "/dashboard/myorders"
-                                        }
-                                    >
-                                        Dashboard
-                                    </NavLink>
+                                    {admin ? (
+                                        <NavLink to="/dashboard/manageallorders">
+                                            Dashboard
+                                        </NavLink>
+                                    ) : (
+                                        <NavLink to="/dashboard/myorders">
+                                            Dashboard
+                                        </NavLink>
+                                    )}
                                 </li>
                                 <li className="mb-1.5">
                                     <p

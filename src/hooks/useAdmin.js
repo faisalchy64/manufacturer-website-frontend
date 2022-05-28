@@ -20,10 +20,8 @@ function useAdmin(email) {
                 setAdmin(res.data.admin);
                 setAdminLoad(false);
             })();
-        } else {
-            setAdminLoad(false);
         }
-    }, []);
+    }, [email]);
 
     return [admin, adminLoad];
 }
