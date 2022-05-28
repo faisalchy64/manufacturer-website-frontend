@@ -2,10 +2,13 @@ import { signOut } from "firebase/auth";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { Link, NavLink, useLocation } from "react-router-dom";
 import auth from "../firebase";
+import useAdmin from "../hooks/useAdmin";
 
 function Navbar() {
     const [user] = useAuthState(auth);
     const { pathname } = useLocation();
+    console.log(user.email);
+    const [admin] = useAdmin(user.email);
 
     return (
         <div className="navbar bg-base-100">
@@ -45,12 +48,25 @@ function Navbar() {
                     {user ? (
                         <>
                             <li>
-                                <NavLink to="/dashboard/myorders">
+                                <NavLink
+                                    to={
+                                        admin
+                                            ? "/dashboard/manageallroders"
+                                            : "/dashboard/myorders"
+                                    }
+                                >
                                     Dashboard
                                 </NavLink>
                             </li>
                             <li>
-                                <p onClick={() => signOut(auth)}>Signout</p>
+                                <p
+                                    onClick={() => {
+                                        signOut(auth);
+                                        localStorage.removeItem("accessToken");
+                                    }}
+                                >
+                                    Signout
+                                </p>
                             </li>
                             <li>
                                 <p className="font-bold text-base-100 bg-rose-700  active:bg-rose-700">
@@ -99,10 +115,27 @@ function Navbar() {
                         {user ? (
                             <>
                                 <li>
-                                    <NavLink to="/dashboard">Dashboard</NavLink>
+                                    <NavLink
+                                        to={
+                                            admin
+                                                ? "/dashboard/manageallroders"
+                                                : "/dashboard/myorders"
+                                        }
+                                    >
+                                        Dashboard
+                                    </NavLink>
                                 </li>
                                 <li className="mb-1.5">
-                                    <p onClick={() => signOut(auth)}>Signout</p>
+                                    <p
+                                        onClick={() => {
+                                            signOut(auth);
+                                            localStorage.removeItem(
+                                                "accessToken"
+                                            );
+                                        }}
+                                    >
+                                        Signout
+                                    </p>
                                 </li>
                                 <li className="mb-1.5">
                                     <p className="font-bold text-base-100 bg-rose-700  active:bg-rose-700">

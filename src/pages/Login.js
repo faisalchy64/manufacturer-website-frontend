@@ -1,21 +1,24 @@
 import img from "../images/img.png";
 import { useForm } from "react-hook-form";
-import GoogleAuth from "../components/GoogleAuth";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import auth from "../firebase";
 import {
-    useAuthState,
     useSendPasswordResetEmail,
     useSignInWithEmailAndPassword,
+    useSignInWithGoogle,
 } from "react-firebase-hooks/auth";
 import { useEffect, useState } from "react";
 import { toast, ToastContainer } from "react-toastify";
+import Loading from "../components/Loading";
+import useToken from "../hooks/useToken";
 
 function Login() {
     const [bool, setBool] = useState(false);
 
-    const [signInWithEmailAndPassword, , , emailPasswordError] =
+    const [signInWithEmailAndPassword, user, loading, emailPasswordError] =
         useSignInWithEmailAndPassword(auth);
+
+    const [signInWithGoogle, guser] = useSignInWithGoogle(auth);
 
     const [sendPasswordResetEmail, , passwordResetError] =
         useSendPasswordResetEmail(auth);
@@ -49,15 +52,20 @@ function Login() {
 
     const navigate = useNavigate();
     const location = useLocation();
-    const [user] = useAuthState(auth);
 
     const from = location.state?.from?.pathname || "/";
 
+    const [token] = useToken(user || guser);
+
     useEffect(() => {
-        if (user) {
+        if (token) {
             navigate(from, { replace: true });
         }
-    }, [user, from, navigate]);
+    }, [user, from, navigate, token]);
+
+    if (loading) {
+        return <Loading />;
+    }
 
     return (
         <div className="flex flex-col bg-base-100">
@@ -221,7 +229,12 @@ function Login() {
                                 <div className="divider mb-0">OR</div>
                             </form>
 
-                            <GoogleAuth />
+                            <button
+                                onClick={() => signInWithGoogle()}
+                                className="btn btn-outline btn-primary mt-0 m-8"
+                            >
+                                Continue With Google
+                            </button>
                         </>
                     )}
                 </div>

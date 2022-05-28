@@ -4,8 +4,6 @@ import Home from "./pages/Home";
 import Login from "./pages/Login";
 import Signup from "./pages/Signup";
 import "react-toastify/dist/ReactToastify.css";
-import Loading from "./components/Loading";
-import { useState } from "react";
 import Purchase from "./pages/Purchase";
 import PrivateRoute from "./components/PrivateRoute";
 import Dashboard from "./pages/Dashboard";
@@ -13,6 +11,9 @@ import MyOrders from "./pages/MyOrders";
 import AddReview from "./pages/AddReview";
 import MyProfile from "./pages/MyProfile";
 import Payment from "./components/Payment";
+import ManageAllOrders from "./pages/ManageAllOrders";
+import MakeAdmin from "./pages/MakeAdmin";
+import AdminRoute from "./components/AdminRoute";
 
 function App() {
     return (
@@ -39,11 +40,31 @@ function App() {
                 >
                     <Route path="myorders" element={<MyOrders />} />
                     <Route path="addreview" element={<AddReview />} />
-                    <Route path="myprofile" element={<MyProfile />} />
                     <Route path="payment/:id" element={<Payment />} />
+
+                    {/* admin routes */}
+
+                    <Route
+                        path="manageallorders"
+                        element={
+                            <AdminRoute>
+                                <ManageAllOrders />
+                            </AdminRoute>
+                        }
+                    />
+                    <Route
+                        path="makeadmin"
+                        element={
+                            <AdminRoute>
+                                <MakeAdmin />
+                            </AdminRoute>
+                        }
+                    />
                 </Route>
                 <Route path="/login" element={<Login />} />
                 <Route path="/signup" element={<Signup />} />
+
+                <Route path="myprofile" element={<MyProfile />} />
             </Routes>
         </div>
     );

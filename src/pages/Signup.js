@@ -1,20 +1,23 @@
 import { useForm } from "react-hook-form";
 import { Link, useNavigate } from "react-router-dom";
-import GoogleAuth from "../components/GoogleAuth";
 import img from "../images/img.png";
 import auth from "../firebase";
 import {
-    useAuthState,
     useCreateUserWithEmailAndPassword,
+    useSignInWithGoogle,
     useUpdateProfile,
 } from "react-firebase-hooks/auth";
 import { useEffect } from "react";
+import useToken from "../hooks/useToken";
+import Loading from "../components/Loading";
 
 function Signup() {
-    const [createUserWithEmailAndPassword, , , emailPasswordError] =
+    const [createUserWithEmailAndPassword, user, loading, emailPasswordError] =
         useCreateUserWithEmailAndPassword(auth, {
             sendEmailVerification: true,
         });
+
+    const [signInWithGoogle, guser] = useSignInWithGoogle(auth);
 
     const [updateProfile] = useUpdateProfile(auth);
 
@@ -32,14 +35,19 @@ function Signup() {
         reset();
     };
 
+    const [token] = useToken(user || guser);
+
     const navigate = useNavigate();
-    const [user] = useAuthState(auth);
 
     useEffect(() => {
-        if (user) {
+        if (token) {
             navigate("/");
         }
-    }, [user, navigate]);
+    }, [navigate, token]);
+
+    if (loading) {
+        return <Loading />;
+    }
 
     return (
         <div className="flex flex-col bg-base-100">
@@ -158,7 +166,12 @@ function Signup() {
                         <div className="divider mb-0">OR</div>
                     </form>
 
-                    <GoogleAuth />
+                    <button
+                        onClick={() => signInWithGoogle()}
+                        className="btn btn-outline btn-primary mt-0 m-8"
+                    >
+                        Continue With Google
+                    </button>
                 </div>
             </div>
         </div>
