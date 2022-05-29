@@ -1,6 +1,7 @@
 import { CardElement, useElements, useStripe } from "@stripe/react-stripe-js";
 import axios from "axios";
 import { useEffect, useState } from "react";
+import { toast, ToastContainer } from "react-toastify";
 
 function CheckoutForm({ order }) {
     const [err, setErr] = useState("");
@@ -8,7 +9,6 @@ function CheckoutForm({ order }) {
     const elements = useElements();
     const [clientSecret, setClientSecret] = useState("");
     const [success, setSuccess] = useState("");
-    const [pros, setPros] = useState(false);
     const [transactionId, setTransactionId] = useState("");
 
     const { _id, price, name, email } = order;
@@ -55,7 +55,6 @@ function CheckoutForm({ order }) {
         }
 
         setSuccess("");
-        setPros(true);
 
         const { paymentIntent, error: intErr } =
             await stripe.confirmCardPayment(clientSecret, {
@@ -70,7 +69,6 @@ function CheckoutForm({ order }) {
 
         if (intErr) {
             setErr(intErr.message);
-            setPros(false);
         } else {
             setTransactionId(paymentIntent.id);
             setErr("");
@@ -81,47 +79,62 @@ function CheckoutForm({ order }) {
                 transactionId: transactionId,
             };
 
-            const res = axios.put(
+            const res = await axios.put(
                 `http://localhost:5000/order/${_id}`,
                 payment
             );
 
-            console.log(res.data);
-            setPros(false);
+            if (res.data.acknowledged) {
+                toast.success("Payment Completed!", {
+                    position: "top-center",
+                    autoClose: 1500,
+                    hideProgressBar: true,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                    progress: undefined,
+                });
+            }
         }
     };
 
     return (
         <>
-            <form onSubmit={handleSubmit}>
+            <form
+                className="flex flex-col min-h-full justify-between"
+                onSubmit={handleSubmit}
+            >
                 <CardElement
                     options={{
                         style: {
                             base: {
-                                fontSize: "12.5px",
-                                fontWeight: 600,
-                                color: "#17202A",
-                                "::placeholder": {
-                                    color: "#1B2631",
-                                },
-                            },
-                            invalid: {
-                                color: "#E74C3C",
+                                fontSize: "15px",
+                                fontWeight: "bold",
+                                color: "#34495E",
                             },
                         },
                     }}
                 />
+
+                {err && (
+                    <p className="text-xs font-bold text-center text-error">
+                        {err}
+                    </p>
+                )}
+                {success && (
+                    <p className="text-xs font-bold text-center text-success">
+                        {success}
+                    </p>
+                )}
                 <button
-                    className="btn btn-sm btn-success text-base-100 mt-5 px-10  rounded-2xl"
+                    className="btn btn-sm btn-success text-base-100  rounded-2xl"
                     type="submit"
                     disabled={!stripe || !clientSecret}
                 >
                     Pay
                 </button>
             </form>
-
-            {err && <p className="text-xs text-error">{err}</p>}
-            {success && <p className="text-xs text-success">{success}</p>}
+            <ToastContainer />
         </>
     );
 }

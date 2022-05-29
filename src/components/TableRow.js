@@ -1,14 +1,23 @@
 import axios from "axios";
+import { useAuthState } from "react-firebase-hooks/auth";
+import auth from "../firebase";
 
 function TableRow({ user, refetch }) {
+    const [isAdmin] = useAuthState(auth);
     const handleAdmin = (email) => {
+        // axios
+        //     .put(`http://localhost:5000/user/admin/${email}`, {
+        //         headers: {
+        //             authorization: `Bearer ${localStorage.getItem(
+        //                 "accessToken"
+        //             )}`,
+        //         },
+        //     })
+        //     .then((res) => refetch());
+
         axios
             .put(`http://localhost:5000/user/admin/${email}`, {
-                headers: {
-                    authorization: `Bearer ${localStorage.getItem(
-                        "accessToken"
-                    )}`,
-                },
+                email: isAdmin.email,
             })
             .then((res) => refetch());
     };

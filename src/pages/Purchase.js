@@ -9,7 +9,7 @@ import { toast, ToastContainer } from "react-toastify";
 function Purchase() {
     const [item, setItem] = useState({});
     const [quantity, setQunatity] = useState(0);
-    const [currentQuantity, setCurrentQunatity] = useState(0);
+    const [bool, setBool] = useState(false);
     const { id } = useParams();
     const [user] = useAuthState(auth);
 
@@ -20,9 +20,7 @@ function Purchase() {
     } = useForm();
 
     const onSubmit = (data) => {
-        console.log(quantity);
-
-        if (available < parseInt(quantity)) {
+        if (available < quantity) {
             toast.error("Unavailable Quantity.", {
                 position: "top-center",
                 autoClose: 1500,
@@ -33,10 +31,11 @@ function Purchase() {
                 progress: undefined,
             });
 
+            setBool(true);
             return;
         }
 
-        if (minimum > parseInt(quantity)) {
+        if (minimum > quantity) {
             toast.error(`Minimum ${minimum} Pieces Needed.`, {
                 position: "top-center",
                 autoClose: 1500,
@@ -47,6 +46,7 @@ function Purchase() {
                 progress: undefined,
             });
 
+            setBool(true);
             return;
         }
 
@@ -60,27 +60,17 @@ function Purchase() {
 
         (async () => {
             const res = await axios.post("http://localhost:5000/order", data);
-            console.log(res.data);
-        })();
-
-        // update a specific product quantity after a order
-
-        const updateQuantity = available - parseInt(quantity);
-        setCurrentQunatity(updateQuantity);
-        const updateItem = {
-            name,
-            img,
-            description,
-            minimum,
-            available: updateQuantity,
-            price,
-        };
-
-        (async () => {
-            const res = await axios.put(`http://localhost:5000/item/${id}`, {
-                updateItem,
-            });
-            console.log(res.data);
+            if (res.data.acknowledged) {
+                toast.success(`Order Place Successfully!`, {
+                    position: "top-center",
+                    autoClose: 1500,
+                    hideProgressBar: true,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                    progress: undefined,
+                });
+            }
         })();
     };
 
@@ -91,13 +81,18 @@ function Purchase() {
             const res = await axios.get(`http://localhost:5000/item/${id}`);
             setItem(res.data);
             setQunatity(res.data.minimum);
-            setCurrentQunatity(res.data.available);
         })();
     }, [id]);
 
     const { name, img, description, minimum, available, price } = item;
 
-    const handleQuantity = (e) => {};
+    const handleQuantity = (e) => {
+        const input = parseInt(e.target.value);
+        setQunatity(input);
+        if (input <= available && input >= minimum) {
+            setBool(false);
+        }
+    };
 
     return (
         <section className="w-4/5 mx-auto my-10">
@@ -115,7 +110,7 @@ function Purchase() {
                         Minimum Order : {minimum} Pieces
                     </h2>
                     <h2 className="font-bold">
-                        Available Quantity : {currentQuantity} Pieces
+                        Available Quantity : {available} Pieces
                     </h2>
                     <h2 className="font-bold">Price : ${price} (Per Piece)</h2>
 
@@ -128,7 +123,7 @@ function Purchase() {
                             placeholder="Enter quantity"
                             className="input input-bordered w-full max-w-xs"
                             value={quantity}
-                            onChange={(e) => setQunatity(e.target.value)}
+                            onChange={handleQuantity}
                         />
                     </div>
                 </div>
@@ -222,7 +217,7 @@ function Purchase() {
                     <button
                         type="submit"
                         className="btn btn-primary"
-                        disabled={available < quantity || minimum > quantity}
+                        disabled={bool}
                     >
                         Purchase
                     </button>

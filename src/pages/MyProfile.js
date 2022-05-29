@@ -7,7 +7,6 @@ import auth from "../firebase";
 
 function MyProfile() {
     const [bool, setBool] = useState(false);
-    const [data, setData] = useState({});
     const [user] = useAuthState(auth);
 
     const {
@@ -25,8 +24,6 @@ function MyProfile() {
             );
 
             if (res.data.acknowledged) {
-                setData(data);
-
                 toast.success(
                     bool
                         ? "Information Updated Successfully!"
@@ -55,7 +52,7 @@ function MyProfile() {
             <div className="px-5">
                 <div className="">
                     <div className="mb-5">
-                        <h1 className="text-2xl font-bold mb-2.5">
+                        <h1 className=" font-bold mb-2.5">
                             Name: {user.displayName}
                         </h1>
                         <h1 className="text-2xl font-bold mb-2.5">

@@ -21,12 +21,12 @@ function Payment() {
     }, [id]);
 
     return (
-        <section className="flex flex-col items-center my-10">
+        <section className="flex flex-col items-center mb-10">
             <h1 className="text-3xl md:text-5xl font-bold text-center mb-10">
                 Pay Now
             </h1>
-            <div className="card lg:card-side bg-base-100 shadow-xl">
-                <figure className="w-full sm:w-[300px] md:w[400px]">
+            <div className="flex flex-col md:flex-row w-full sm:w-3/4 bg-base-100 shadow-xl mx-5 border rounded-3xl">
+                <figure className="flex">
                     <img src={order.img} alt="" />
                 </figure>
                 <div className="card-body">
@@ -34,20 +34,23 @@ function Payment() {
                         {order.productName}
                     </h2>
                     <h2 className="font-bold">Description</h2>
-                    <p className="text-xs flex-grow-0">{order.description}</p>
-                    <h2 className="font-bold">Pay Amount : ${order.price}</h2>
+                    <p className="text-xs">
+                        {order.description?.slice(0, 150)}...
+                    </p>
                     <h2 className="font-bold">
                         Quantity : {order.quantity} Pieces
+                    </h2>
+                    <h2 className="font-bold">Pay Amount : ${order.price}</h2>
+                    <h2 className="font-bold">
+                        Price : ${order.price} (Per Piece)
                     </h2>
                 </div>
             </div>
 
-            <div className="card w-full md:w-[450px] my-10 shadow-2xl">
-                <div className="card-body">
-                    <Elements stripe={stripePromise}>
-                        <CheckoutForm order={order} />
-                    </Elements>
-                </div>
+            <div className="w-full h-[200px] md:w-[450px] shadow-2xl rounded-3xl mx-5 mt-10 p-5 px-10 border">
+                <Elements stripe={stripePromise}>
+                    <CheckoutForm order={order} />
+                </Elements>
             </div>
         </section>
     );
