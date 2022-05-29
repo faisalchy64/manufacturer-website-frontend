@@ -13,6 +13,7 @@ function AddProduct() {
     const onSubmit = async (data) => {
         data.minimum = parseInt(data.minimum);
         data.available = parseInt(data.available);
+        data.price = parseInt(data.price);
 
         const res = await axios.post(
             "https://stormy-sands-44537.herokuapp.com/item",
@@ -30,6 +31,8 @@ function AddProduct() {
                 progress: undefined,
             });
         }
+
+        reset();
     };
 
     return (
@@ -68,6 +71,23 @@ function AddProduct() {
                             {...register("img", { required: true })}
                         />
                         {errors?.img?.type === "required" && (
+                            <p className="text-xs text-error m-1.5">
+                                *This field is required.*
+                            </p>
+                        )}
+                    </div>
+
+                    <div className="form-control">
+                        <label className="label">
+                            <span className="label-text">Price</span>
+                        </label>
+                        <input
+                            type="text"
+                            placeholder="Enter product price"
+                            className="input input-bordered"
+                            {...register("price", { required: true })}
+                        />
+                        {errors?.price?.type === "required" && (
                             <p className="text-xs text-error m-1.5">
                                 *This field is required.*
                             </p>
