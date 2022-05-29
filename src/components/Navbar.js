@@ -46,6 +46,9 @@ function Navbar() {
                     <li>
                         <NavLink to="/myportfolio">My Portfolio</NavLink>
                     </li>
+                    <li>
+                        <NavLink to="/blog">Blog</NavLink>
+                    </li>
 
                     {user ? (
                         <>
@@ -116,6 +119,9 @@ function Navbar() {
                         </li>
                         <li>
                             <NavLink to="/myportfolio">My Portfolio</NavLink>
+                        </li>
+                        <li>
+                            <NavLink to="/blog">Blog</NavLink>
                         </li>
                         {user ? (
                             <>
