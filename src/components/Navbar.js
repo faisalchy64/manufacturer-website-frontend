@@ -10,7 +10,7 @@ function Navbar() {
     const [admin] = useAdmin(user?.email);
 
     return (
-        <div className="navbar bg-base-100">
+        <div className="navbar justify-between bg-base-100">
             {pathname.includes("/dashboard") && (
                 <label
                     htmlFor="my-drawer-2"
@@ -32,13 +32,13 @@ function Navbar() {
                 </label>
             )}
 
-            <div className="navbar-start">
+            <div className="">
                 <Link to="/" className="btn btn-ghost normal-case text-xl">
                     Comparts
                 </Link>
             </div>
 
-            <div className="navbar-end hidden lg:flex">
+            <div className="navbar-end grow hidden lg:flex">
                 <ul className="menu menu-horizontal p-0 gap-x-1.5">
                     <li>
                         <NavLink to="/">Home</NavLink>
