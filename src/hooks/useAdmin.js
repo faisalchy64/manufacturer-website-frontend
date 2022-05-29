@@ -8,7 +8,7 @@ function useAdmin(email) {
         if (email) {
             (async () => {
                 const res = await axios.get(
-                    `http://localhost:5000/admin/${email}`,
+                    `https://stormy-sands-44537.herokuapp.com/admin/${email}`,
                     {
                         headers: {
                             authorization: `Bearer ${localStorage.getItem(

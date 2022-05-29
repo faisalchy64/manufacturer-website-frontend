@@ -59,7 +59,10 @@ function Purchase() {
         // post a specific order to database
 
         (async () => {
-            const res = await axios.post("http://localhost:5000/order", data);
+            const res = await axios.post(
+                "https://stormy-sands-44537.herokuapp.com/order",
+                data
+            );
             if (res.data.acknowledged) {
                 toast.success(`Order Place Successfully!`, {
                     position: "top-center",
@@ -78,7 +81,9 @@ function Purchase() {
 
     useEffect(() => {
         (async () => {
-            const res = await axios.get(`http://localhost:5000/item/${id}`);
+            const res = await axios.get(
+                `https://stormy-sands-44537.herokuapp.com/item/${id}`
+            );
             setItem(res.data);
             setQunatity(res.data.minimum);
         })();

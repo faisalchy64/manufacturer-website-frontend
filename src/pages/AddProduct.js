@@ -14,7 +14,10 @@ function AddProduct() {
         data.minimum = parseInt(data.minimum);
         data.available = parseInt(data.available);
 
-        const res = await axios.post("http://localhost:5000/item", data);
+        const res = await axios.post(
+            "https://stormy-sands-44537.herokuapp.com/item",
+            data
+        );
 
         if (res.data.acknowledged) {
             toast.success("Product Added Successfully!", {

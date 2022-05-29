@@ -19,7 +19,7 @@ function MyProfile() {
     const onSubmit = (data) => {
         (async () => {
             const res = await axios.put(
-                `http://localhost:5000/userinfo/${user?.email}`,
+                `https://stormy-sands-44537.herokuapp.com/userinfo/${user?.email}`,
                 data
             );
 

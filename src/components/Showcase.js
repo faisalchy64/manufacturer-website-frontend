@@ -7,7 +7,9 @@ function Showcase() {
 
     useEffect(() => {
         (async () => {
-            const res = await axios.get("http://localhost:5000/items");
+            const res = await axios.get(
+                "https://stormy-sands-44537.herokuapp.com/items"
+            );
             setItems(res.data);
         })();
     }, []);

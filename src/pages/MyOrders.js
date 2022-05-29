@@ -14,7 +14,7 @@ function MyOrders() {
     useEffect(() => {
         (async () => {
             const res = await axios.get(
-                `http://localhost:5000/orders?email=${user?.email}`,
+                `https://stormy-sands-44537.herokuapp.com/orders?email=${user?.email}`,
                 {
                     headers: {
                         authorization: `Bearer ${localStorage.getItem(
@@ -37,7 +37,9 @@ function MyOrders() {
 
     const handleConfirm = async (confirm) => {
         if (confirm) {
-            const res = await axios.delete(`http://localhost:5000/order/${id}`);
+            const res = await axios.delete(
+                `https://stormy-sands-44537.herokuapp.com/order/${id}`
+            );
 
             console.log(res.data);
         }

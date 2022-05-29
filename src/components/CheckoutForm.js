@@ -16,7 +16,7 @@ function CheckoutForm({ order }) {
     useEffect(() => {
         (async () => {
             const res = await axios.post(
-                "http://localhost:5000/create-payment-intent",
+                "https://stormy-sands-44537.herokuapp.com/create-payment-intent",
                 {
                     price,
                 }
@@ -80,7 +80,7 @@ function CheckoutForm({ order }) {
             };
 
             const res = await axios.put(
-                `http://localhost:5000/order/${_id}`,
+                `https://stormy-sands-44537.herokuapp.com/order/${_id}`,
                 payment
             );
 

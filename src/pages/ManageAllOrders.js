@@ -5,24 +5,30 @@ import { useQuery } from "react-query";
 function ManageAllOrders() {
     const [id, setId] = useState("");
     const { data: orders, refetch } = useQuery("orders", () =>
-        axios.get("http://localhost:5000/allorders").then((res) => res.data)
+        axios
+            .get("https://stormy-sands-44537.herokuapp.com/allorders")
+            .then((res) => res.data)
     );
 
     const handleShipping = (id) => {
-        axios.put(`http://localhost:5000/shipping/${id}`).then((res) => {
-            if (res.data.acknowledged) {
-                refetch();
-            }
-        });
-    };
-
-    const handleConfirm = (confirm) => {
-        if (confirm) {
-            axios.delete(`http://localhost:5000/delete/${id}`).then((res) => {
+        axios
+            .put(`https://stormy-sands-44537.herokuapp.com/shipping/${id}`)
+            .then((res) => {
                 if (res.data.acknowledged) {
                     refetch();
                 }
             });
+    };
+
+    const handleConfirm = (confirm) => {
+        if (confirm) {
+            axios
+                .delete(`https://stormy-sands-44537.herokuapp.com/delete/${id}`)
+                .then((res) => {
+                    if (res.data.acknowledged) {
+                        refetch();
+                    }
+                });
         }
     };
 

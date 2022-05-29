@@ -5,7 +5,7 @@ import TableRow from "../components/TableRow";
 function MakeAdmin() {
     const { data: users, refetch } = useQuery("users", () =>
         axios
-            .get("http://localhost:5000/users", {
+            .get("https://stormy-sands-44537.herokuapp.com/users", {
                 headers: {
                     authorization: `Bearer ${localStorage.getItem(
                         "accessToken"

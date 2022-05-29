@@ -13,7 +13,10 @@ function AddReview() {
         data.rating = parseInt(data.rating);
 
         (async () => {
-            const res = await axios.post("http://localhost:5000/review", data);
+            const res = await axios.post(
+                "https://stormy-sands-44537.herokuapp.com/review",
+                data
+            );
 
             if (res.data.acknowledged) {
                 toast.success("Review Added Successfully!", {

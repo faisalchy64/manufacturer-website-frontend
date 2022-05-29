@@ -6,12 +6,16 @@ function ManageProducts() {
     const [id, setId] = useState("");
 
     const { data: products, refetch } = useQuery("products", () =>
-        axios.get("http://localhost:5000/items").then((res) => res.data)
+        axios
+            .get("https://stormy-sands-44537.herokuapp.com/items")
+            .then((res) => res.data)
     );
 
     const handleDelete = async (confirm) => {
         if (confirm) {
-            const res = await axios.delete(`http://localhost:5000/item/${id}`);
+            const res = await axios.delete(
+                `https://stormy-sands-44537.herokuapp.com/item/${id}`
+            );
 
             if (res.data.acknowledged) {
                 refetch();
