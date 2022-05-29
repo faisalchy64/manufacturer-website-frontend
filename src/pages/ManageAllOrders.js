@@ -1,10 +1,30 @@
 import axios from "axios";
+import { useState } from "react";
 import { useQuery } from "react-query";
 
 function ManageAllOrders() {
-    const { data: orders } = useQuery("orders", () =>
+    const [id, setId] = useState("");
+    const { data: orders, refetch } = useQuery("orders", () =>
         axios.get("http://localhost:5000/allorders").then((res) => res.data)
     );
+
+    const handleShipping = () => {
+        axios.put(`http://localhost:5000/shipping/${id}`).then((res) => {
+            if (res.data.acknowledged) {
+                refetch();
+            }
+        });
+    };
+
+    const handleConfirm = (confirm) => {
+        if (confirm) {
+            axios.delete(`http://localhost:5000/delete/${id}`).then((res) => {
+                if (res.data.acknowledged) {
+                    refetch();
+                }
+            });
+        }
+    };
 
     return (
         <section>
@@ -21,6 +41,7 @@ function ManageAllOrders() {
                             <th>Price($)</th>
                             <th>Quantity</th>
                             <th>Pay</th>
+                            <th>Edit</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -33,14 +54,30 @@ function ManageAllOrders() {
                                 <td>{order?.quantity}</td>
                                 <td>
                                     {order?.paid ? (
-                                        <button className="btn btn-sm btn-success">
-                                            Pending
+                                        <button
+                                            onClick={() => setId(order?._id)}
+                                            className="btn btn-sm btn-success"
+                                            disabled={order?.shipping}
+                                        >
+                                            {order?.shipping
+                                                ? "Shipping"
+                                                : "Pending"}
                                         </button>
                                     ) : (
                                         <button className="btn btn-sm btn-primary">
                                             Unpaid
                                         </button>
                                     )}
+                                </td>
+                                <td>
+                                    <label
+                                        htmlFor="my-modal-6"
+                                        className="btn btn-sm btn-error"
+                                        disabled={order?.paid}
+                                        onClick={() => setId(order?._id)}
+                                    >
+                                        Cancel
+                                    </label>
                                 </td>
                             </tr>
                         ))}
@@ -55,7 +92,11 @@ function ManageAllOrders() {
                         Are You Sure, You Want To Cancel The Order!
                     </h3>
                     <div className="modal-action">
-                        <label htmlFor="my-modal-6" className="btn btn-success">
+                        <label
+                            onClick={() => handleConfirm("confirm")}
+                            htmlFor="my-modal-6"
+                            className="btn btn-success"
+                        >
                             Confirm
                         </label>
 

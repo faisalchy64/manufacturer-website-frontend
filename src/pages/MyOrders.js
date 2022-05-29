@@ -65,12 +65,14 @@ function MyOrders() {
                             <tr key={order._id}>
                                 <td>{order.productName}</td>
                                 <td>{order?.transactionId}</td>
-                                <td>{order.price}</td>
-                                <td>{order.quantity}</td>
+                                <td>{order?.price}</td>
+                                <td>{order?.quantity}</td>
                                 <td>
                                     {order?.paid ? (
                                         <button className="btn btn-sm btn-success">
-                                            Paid
+                                            {order?.shipping
+                                                ? "Shipping"
+                                                : "Paid"}
                                         </button>
                                     ) : (
                                         <Link

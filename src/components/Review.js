@@ -1,3 +1,5 @@
+import { Rating, Typography } from "@mui/material";
+
 function Review({ review }) {
     const { name, discription, rating } = review;
 
@@ -7,7 +9,8 @@ function Review({ review }) {
                 <h2 className="text-2xl font-bold">{name}</h2>
                 <h2 className="font-bold">Review</h2>
                 <p className="text-xs">{discription?.slice(0, 150)}...</p>
-                <h2 className="font-bold">Ratings: {rating}</h2>
+                <Typography component="legend"></Typography>
+                <Rating name="read-only" value={parseInt(rating)} readOnly />
             </div>
         </div>
     );

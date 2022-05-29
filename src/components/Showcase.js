@@ -19,7 +19,7 @@ function Showcase() {
             </h1>
 
             <div className="my-5 grid lg:grid-cols-3 md:grid-cols-2 gap-2.5">
-                {items.map((item) => (
+                {items?.slice(0, 6)?.map((item) => (
                     <Card key={item._id} item={item} />
                 ))}
             </div>
