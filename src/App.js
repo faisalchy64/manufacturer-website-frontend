@@ -16,6 +16,7 @@ import MakeAdmin from "./pages/MakeAdmin";
 import AdminRoute from "./components/AdminRoute";
 import AddProduct from "./pages/AddProduct";
 import ManageProducts from "./pages/ManageProducts";
+import MyPortfolio from "./pages/MyPortfolio";
 
 function App() {
     return (
@@ -80,6 +81,8 @@ function App() {
                         }
                     />
                 </Route>
+
+                <Route path="/myportfolio" element={<MyPortfolio />} />
                 <Route path="/login" element={<Login />} />
                 <Route path="/signup" element={<Signup />} />
             </Routes>
