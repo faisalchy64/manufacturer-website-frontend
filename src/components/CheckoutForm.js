@@ -76,7 +76,7 @@ function CheckoutForm({ order }) {
 
             const payment = {
                 _id: _id,
-                transactionId: transactionId,
+                transactionId: paymentIntent.client_secret,
             };
 
             const res = await axios.put(

@@ -8,7 +8,7 @@ function ManageAllOrders() {
         axios.get("http://localhost:5000/allorders").then((res) => res.data)
     );
 
-    const handleShipping = () => {
+    const handleShipping = (id) => {
         axios.put(`http://localhost:5000/shipping/${id}`).then((res) => {
             if (res.data.acknowledged) {
                 refetch();
@@ -55,7 +55,9 @@ function ManageAllOrders() {
                                 <td>
                                     {order?.paid ? (
                                         <button
-                                            onClick={() => setId(order?._id)}
+                                            onClick={() =>
+                                                handleShipping(order?._id)
+                                            }
                                             className="btn btn-sm btn-success"
                                             disabled={order?.shipping}
                                         >
