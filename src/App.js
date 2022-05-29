@@ -17,6 +17,8 @@ import AdminRoute from "./components/AdminRoute";
 import AddProduct from "./pages/AddProduct";
 import ManageProducts from "./pages/ManageProducts";
 import MyPortfolio from "./pages/MyPortfolio";
+import NotFound from "./pages/NotFound";
+import Blog from "./pages/Blog";
 
 function App() {
     return (
@@ -85,6 +87,8 @@ function App() {
                 <Route path="/myportfolio" element={<MyPortfolio />} />
                 <Route path="/login" element={<Login />} />
                 <Route path="/signup" element={<Signup />} />
+                <Route path="/blog" element={<Blog />} />
+                <Route path="*" element={<NotFound />} />
             </Routes>
         </div>
     );
