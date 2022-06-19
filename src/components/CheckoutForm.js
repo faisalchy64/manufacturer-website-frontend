@@ -9,7 +9,6 @@ function CheckoutForm({ order }) {
     const elements = useElements();
     const [clientSecret, setClientSecret] = useState("");
     const [success, setSuccess] = useState("");
-    const [transactionId, setTransactionId] = useState("");
 
     const { _id, price, name, email } = order;
 
@@ -70,7 +69,6 @@ function CheckoutForm({ order }) {
         if (intErr) {
             setErr(intErr.message);
         } else {
-            setTransactionId(paymentIntent.id);
             setErr("");
             setSuccess("Payment Successfully Completed!");
 
