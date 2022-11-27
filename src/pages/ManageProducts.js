@@ -7,14 +7,14 @@ function ManageProducts() {
 
     const { data: products, refetch } = useQuery("products", () =>
         axios
-            .get("https://stormy-sands-44537.herokuapp.com/items")
+            .get("https://manufacturer-website-backend.onrender.com/items")
             .then((res) => res.data)
     );
 
     const handleDelete = async (confirm) => {
         if (confirm) {
             const res = await axios.delete(
-                `https://stormy-sands-44537.herokuapp.com/item/${id}`
+                `https://manufacturer-website-backend.onrender.com/item/${id}`
             );
 
             if (res.data.acknowledged) {

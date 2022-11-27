@@ -8,7 +8,7 @@ function Showcase() {
     useEffect(() => {
         (async () => {
             const res = await axios.get(
-                "https://stormy-sands-44537.herokuapp.com/items"
+                "https://manufacturer-website-backend.onrender.com/items"
             );
             setItems(res.data);
         })();

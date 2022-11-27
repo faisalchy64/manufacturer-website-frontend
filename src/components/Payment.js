@@ -16,7 +16,7 @@ function Payment() {
     useEffect(() => {
         (async () => {
             const res = await axios.get(
-                `https://stormy-sands-44537.herokuapp.com/order/${id}`
+                `https://manufacturer-website-backend.onrender.com/order/${id}`
             );
             setOrder(res.data);
         })();

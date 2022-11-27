@@ -8,7 +8,7 @@ function Reviews() {
     useEffect(() => {
         (async () => {
             const res = await axios.get(
-                "https://stormy-sands-44537.herokuapp.com/reviews"
+                "https://manufacturer-website-backend.onrender.com/reviews"
             );
             setReviews(res.data?.reverse());
         })();

@@ -8,7 +8,7 @@ function useToken(user) {
         if (user?.user?.email) {
             (async () => {
                 const res = await axios.put(
-                    `https://stormy-sands-44537.herokuapp.com/user/${user?.user?.email}`,
+                    `https://manufacturer-website-backend.onrender.com/user/${user?.user?.email}`,
                     { email: user?.user?.email }
                 );
 

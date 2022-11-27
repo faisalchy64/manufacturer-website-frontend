@@ -14,7 +14,7 @@ function AddReview() {
 
         (async () => {
             const res = await axios.post(
-                "https://stormy-sands-44537.herokuapp.com/review",
+                "https://manufacturer-website-backend.onrender.com/review",
                 data
             );
 

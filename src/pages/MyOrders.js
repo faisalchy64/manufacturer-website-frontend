@@ -14,7 +14,7 @@ function MyOrders() {
     useEffect(() => {
         (async () => {
             const res = await axios.get(
-                `https://stormy-sands-44537.herokuapp.com/orders?email=${user?.email}`,
+                `https://manufacturer-website-backend.onrender.com/orders?email=${user?.email}`,
                 {
                     headers: {
                         authorization: `Bearer ${localStorage.getItem(
@@ -38,7 +38,7 @@ function MyOrders() {
     const handleConfirm = async (confirm) => {
         if (confirm) {
             const res = await axios.delete(
-                `https://stormy-sands-44537.herokuapp.com/order/${id}`
+                `https://manufacturer-website-backend.onrender.com/order/${id}`
             );
 
             console.log(res.data);

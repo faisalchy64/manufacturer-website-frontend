@@ -6,13 +6,15 @@ function ManageAllOrders() {
     const [id, setId] = useState("");
     const { data: orders, refetch } = useQuery("orders", () =>
         axios
-            .get("https://stormy-sands-44537.herokuapp.com/allorders")
+            .get("https://manufacturer-website-backend.onrender.com/allorders")
             .then((res) => res.data)
     );
 
     const handleShipping = (id) => {
         axios
-            .put(`https://stormy-sands-44537.herokuapp.com/shipping/${id}`)
+            .put(
+                `https://manufacturer-website-backend.onrender.com/shipping/${id}`
+            )
             .then((res) => {
                 if (res.data.acknowledged) {
                     refetch();
@@ -23,7 +25,9 @@ function ManageAllOrders() {
     const handleConfirm = (confirm) => {
         if (confirm) {
             axios
-                .delete(`https://stormy-sands-44537.herokuapp.com/delete/${id}`)
+                .delete(
+                    `https://manufacturer-website-backend.onrender.com/delete/${id}`
+                )
                 .then((res) => {
                     if (res.data.acknowledged) {
                         refetch();

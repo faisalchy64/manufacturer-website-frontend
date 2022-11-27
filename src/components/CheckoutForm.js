@@ -15,7 +15,7 @@ function CheckoutForm({ order }) {
     useEffect(() => {
         (async () => {
             const res = await axios.post(
-                "https://stormy-sands-44537.herokuapp.com/create-payment-intent",
+                "https://manufacturer-website-backend.onrender.com/create-payment-intent",
                 {
                     price,
                 }
@@ -78,7 +78,7 @@ function CheckoutForm({ order }) {
             };
 
             const res = await axios.put(
-                `https://stormy-sands-44537.herokuapp.com/order/${_id}`,
+                `https://manufacturer-website-backend.onrender.com/order/${_id}`,
                 payment
             );
 

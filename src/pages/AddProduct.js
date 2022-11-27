@@ -16,7 +16,7 @@ function AddProduct() {
         data.price = parseInt(data.price);
 
         const res = await axios.post(
-            "https://stormy-sands-44537.herokuapp.com/item",
+            "https://manufacturer-website-backend.onrender.com/item",
             data
         );
 

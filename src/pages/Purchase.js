@@ -60,7 +60,7 @@ function Purchase() {
 
         (async () => {
             const res = await axios.post(
-                "https://stormy-sands-44537.herokuapp.com/order",
+                "https://manufacturer-website-backend.onrender.com/order",
                 data
             );
             if (res.data.acknowledged) {
@@ -82,7 +82,7 @@ function Purchase() {
     useEffect(() => {
         (async () => {
             const res = await axios.get(
-                `https://stormy-sands-44537.herokuapp.com/item/${id}`
+                `https://manufacturer-website-backend.onrender.com/item/${id}`
             );
             setItem(res.data);
             setQunatity(res.data.minimum);

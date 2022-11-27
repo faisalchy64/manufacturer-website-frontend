@@ -6,7 +6,7 @@ function TableRow({ user, refetch }) {
     const [isAdmin] = useAuthState(auth);
     const handleAdmin = (email) => {
         // axios
-        //     .put(`https://stormy-sands-44537.herokuapp.com/user/admin/${email}`, {
+        //     .put(`https://manufacturer-website-backend.onrender.com/user/admin/${email}`, {
         //         headers: {
         //             authorization: `Bearer ${localStorage.getItem(
         //                 "accessToken"
@@ -17,7 +17,7 @@ function TableRow({ user, refetch }) {
 
         axios
             .put(
-                `https://stormy-sands-44537.herokuapp.com/user/admin/${email}`,
+                `https://manufacturer-website-backend.onrender.com/user/admin/${email}`,
                 {
                     email: isAdmin.email,
                 }
